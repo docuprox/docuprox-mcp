@@ -4,6 +4,7 @@ import {
   ProcessAgentSchema,
   JobStatusSchema,
   PollJobSchema,
+  JobResultsSchema,
 } from "./tools.js";
 
 export type ToolResult = {
@@ -90,6 +91,21 @@ export async function handleTool(
         return ok(result);
       } catch (e) {
         return err("job_status failed", e);
+      }
+    }
+
+    // ── job_results ──────────────────────────────────────────────────────────
+    case "job_results": {
+      const parsed = JobResultsSchema.safeParse(rawArgs);
+      if (!parsed.success) {
+        return err("Invalid arguments for job_results", parsed.error.format());
+      }
+      const { job_id, result_format } = parsed.data;
+      try {
+        const result = await client.jobResults({ job_id, result_format });
+        return ok(result);
+      } catch (e) {
+        return err("job_results failed", e);
       }
     }
 

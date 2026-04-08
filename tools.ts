@@ -75,6 +75,22 @@ export const JobStatusSchema = z.object({
 
 export type JobStatusInput = z.infer<typeof JobStatusSchema>;
 
+// ─── job_results ─────────────────────────────────────────────────────────────
+
+export const JobResultsSchema = z.object({
+  job_id: z
+    .string()
+    .uuid()
+    .describe("UUID of the job returned by process_job"),
+  result_format: z
+    .enum(["json", "csv"])
+    .optional()
+    .default("json")
+    .describe("Format of the results to retrieve, either 'json' or 'csv' (default: 'json')"),
+});
+
+export type JobResultsInput = z.infer<typeof JobResultsSchema>;
+
 // ─── poll_job ────────────────────────────────────────────────────────────────
 
 export const PollJobSchema = z.object({
@@ -179,13 +195,33 @@ export const TOOL_DEFINITIONS = [
     name: "job_status",
     description:
       "Check the current status of an asynchronous DocuProx processing job. " +
-      "Returns the job_id and status string (e.g. NEW, PROCESSING, COMPLETED, FAILED).",
+      "Returns the job_id and status string (e.g. NEW, UNZIP FILE, UNZIP FILE SUCCESS, UNZIP FILE FAILED,PROCESS IMAGE, PROCESS IMAGE SUCCESS,PROCESS IMAGE FAILED,SUCCESS,FAILED).",
     inputSchema: {
       type: "object" as const,
       properties: {
         job_id: {
           type: "string",
           description: "UUID of the job returned by process_job.",
+        },
+      },
+      required: ["job_id"],
+    },
+  },
+  {
+    name: "job_results",
+    description:
+      "Fetch the extracted results of a completed asynchronous DocuProx processing job. " +
+      "Requires a valid job_id and optionally a format ('json' or 'csv').",
+    inputSchema: {
+      type: "object" as const,
+      properties: {
+        job_id: {
+          type: "string",
+          description: "UUID of the job.",
+        },
+        result_format: {
+          type: "string",
+          description: "Format of the results ('json' or 'csv'). Defaults to 'json'.",
         },
       },
       required: ["job_id"],

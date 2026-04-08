@@ -162,6 +162,22 @@ export class DocuProxClient {
   }
 
   /**
+   * Fetch the results of a completed job.
+   */
+  async jobResults(payload: { job_id: string; result_format?: string }): Promise<unknown> {
+    const response = await this.http.post(
+      "/job-results",
+      payload,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  }
+
+  /**
    * Poll job until terminal status or timeout (ms).
    */
   async pollJobUntilDone(
