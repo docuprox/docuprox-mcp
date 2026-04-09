@@ -1,0 +1,21 @@
+# Dependencies
+node_modules/
+
+# Source and config files
+*.ts
+!*.d.ts
+tsconfig.json
+.gitignore
+.npmignore
+
+# Environment files
+.env
+.env.*
+
+# Tests
+__tests__/
+*.test.ts
+*.spec.ts
+
+# Ensure dist folder is NOT ignored during publish
+!dist/
