@@ -9,6 +9,16 @@
   "files": [
     "dist"
   ],
+  "author": "DocuProx",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/docuprox/docuprox-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/docuprox/docuprox-mcp/issues"
+  },
+  "homepage": "https://github.com/docuprox/docuprox-mcp#readme",
   "scripts": {
     "build": "tsc",
     "dev": "ts-node index.ts",
@@ -31,6 +41,5 @@
     "ts-node": "^10.9.0",
     "typescript": "^5.0.0"
   },
-  "keywords": ["mcp", "docuprox", "document-processing", "ocr"],
-  "license": "MIT"
+  "keywords": ["mcp", "docuprox", "document-processing", "ocr"]
 }
